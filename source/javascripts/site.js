@@ -101,3 +101,14 @@ if (sign && !prefersReducedMotion && window.scrollY < 2 && !window.location.hash
   interruptEvents.forEach((eventName) => window.addEventListener(eventName, interruptAutoScroll, {once: true, passive: true}));
   scrollTimeout = window.setTimeout(animateToSign, autoScrollDelay);
 }
+
+// Scroll back to the top without leaving "#top" in the URL, so a reload still plays the auto-scroll.
+const brandLink = document.querySelector('.site-brand');
+
+if (brandLink) {
+  brandLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    window.scrollTo({top: 0});
+    if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+  });
+}
