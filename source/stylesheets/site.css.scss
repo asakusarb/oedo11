@@ -91,7 +91,7 @@ a:focus-visible {
 }
 
 .hero__cloud--ticket {
-  top: calc(84% + 40px);
+  top: calc(84% + 70px);
   left: 20%;
   width: 60%;
   --cloud-drift-start: -120px;
@@ -180,7 +180,7 @@ a:focus-visible {
   z-index: 6;
   display: flex;
   justify-content: center;
-  margin-top: -52px;
+  margin-top: -20px;
   padding: 8px 20px 32px;
 }
 
@@ -249,7 +249,7 @@ a:focus-visible {
 
 .event-info__gem {
   display: block;
-  width: 54px;
+  width: 44px;
   height: auto;
   flex: 0 0 auto;
 }
@@ -271,7 +271,7 @@ a:focus-visible {
 .event-info__title {
   margin: 0;
   color: $ink;
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .event-info__details {
@@ -301,7 +301,6 @@ a:focus-visible {
 
 .event-info__item dt {
   color: $coral;
-  font-size: 14px;
   font-weight: 700;
 }
 
@@ -309,6 +308,11 @@ a:focus-visible {
   margin: 0;
   font-size: 21px;
   font-weight: 700;
+}
+
+// Keeps a phrase on one line so Japanese text wraps between phrases.
+.event-info__phrase {
+  display: inline-block;
 }
 
 .event-info__address {
@@ -343,7 +347,7 @@ a:focus-visible {
 .event-info__note {
   margin: 18px 0 0;
   color: rgba($ink, 0.76);
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -427,6 +431,12 @@ a:focus-visible {
 }
 
 @media (max-width: 640px) {
+  .site-brand {
+    top: 12px;
+    left: 16px;
+    width: clamp(68px, 20vw, 84px);
+  }
+
   .hero__brand-spacer {
     height: 40px;
   }
@@ -440,7 +450,11 @@ a:focus-visible {
   }
 
   .event-info__gem {
-    width: 44px;
+    width: 36px;
+  }
+
+  .event-info__title {
+    font-size: 22px;
   }
 
   .event-info__details {
@@ -458,11 +472,15 @@ a:focus-visible {
   }
 
   .event-info__item dd {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .event-info__note {
+    font-size: 15px;
   }
 
   .hero__ticket {
-    margin-top: 22px;
+    margin-top: 46px;
     padding: 8px 16px 28px;
   }
 
@@ -489,6 +507,14 @@ a:focus-visible {
     gap: 10px 20px;
     padding-left: 0;
     border-left: 0;
+  }
+
+  .site-footer__presenter {
+    font-size: 13px;
+  }
+
+  .site-footer__design-link {
+    font-size: 12px;
   }
 }
 
