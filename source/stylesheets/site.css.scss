@@ -203,7 +203,15 @@ a:focus-visible {
   transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-.hero__ticket-button:hover {
+.hero__ticket-button.is-disabled {
+  border-color: rgba($ink, 0.28);
+  color: rgba($ink, 0.72);
+  background: $paper;
+  box-shadow: 0 3px 0 rgba($ink, 0.2);
+  cursor: default;
+}
+
+.hero__ticket-button:not(.is-disabled):hover {
   background: $coral-hover;
   box-shadow: 0 1px 0 $coral-shadow;
   transform: translateY(2px);
