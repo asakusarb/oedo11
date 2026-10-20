@@ -1,0 +1,61 @@
+---
+title: 大江戸Ruby会議11
+description: 2026年11月8日開催。大江戸Ruby会議11の公式サイトです。
+---
+%main
+  = link_to '#top', class: 'site-brand' do
+    = image_tag 'event-logo.svg', class: 'site-brand__image', alt: '大江戸Ruby会議11'
+  %section.hero#top{aria: {label: '大江戸Ruby会議11'}}
+    .hero__brand-spacer
+    .hero__scene
+      - %w[large small medium medium small large].each do |size|
+        = image_tag "cloud-#{size}.svg", class: 'hero__object hero__cloud hero__cloud--random', alt: '', aria: {hidden: 'true'}
+      = image_tag 'cloud-medium.svg', class: 'hero__object hero__cloud hero__cloud--ticket', alt: '', aria: {hidden: 'true'}
+      = image_tag 'city.svg', class: 'hero__object hero__city', alt: '街並みとタワーのイラスト'
+      = image_tag 'pigeon.svg', class: 'hero__object hero__animal hero__animal--pigeon hero__reveal', alt: '空を飛ぶ鳩のイラスト'
+      = image_tag 'person.svg', class: 'hero__object hero__person hero__reveal', alt: '人物のイラスト'
+      = image_tag 'alpaca.svg', class: 'hero__object hero__animal hero__animal--alpaca hero__reveal', alt: 'アルパカのイラスト'
+      = image_tag 'gorilla.svg', class: 'hero__object hero__animal hero__animal--gorilla hero__reveal', alt: 'ゴリラのイラスト'
+      = image_tag 'sign.svg', class: 'hero__object hero__sign', alt: '大江戸Ruby会議11の案内看板'
+    .hero__ticket
+      -# 販売開始後は下の link_to に戻す
+      -# = link_to '参加チケットを購入する', 'https://asakusarb.doorkeeper.jp/events/199923', class: 'hero__ticket-button', target: '_blank', rel: 'noopener'
+      %span.hero__ticket-button.is-disabled チケット販売準備中
+
+  %section.event-info#event-info
+    .event-info__inner
+      .event-info__heading
+        = image_tag 'gem.svg', class: 'event-info__gem', alt: '', aria: {hidden: 'true'}
+        %h1.event-info__title 開催情報
+      .event-info__details
+        %dl.event-info__list
+          .event-info__item
+            %dt 日程
+            %dd
+              %time{datetime: '2026-11-08'} 2026年11月8日（日）
+          .event-info__item
+            %dt 会場
+            %dd
+              %span.event-info__phrase 東京芸術センター
+              %span.event-info__phrase 天空劇場
+              %span.event-info__address
+                %span.event-info__phrase 〒120-0034
+                %span.event-info__phrase 東京都足立区千住1-4-1
+              = link_to 'https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E8%8A%B8%E8%A1%93%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%20%E5%A4%A9%E7%A9%BA%E5%8A%87%E5%A0%B4', class: 'event-info__map-link', target: '_blank', rel: 'noopener' do
+                = image_tag 'map-pin.svg', class: 'event-info__map-pin', alt: ''
+                %span Google Maps
+      %p.event-info__note
+        %span.event-info__phrase> 詳細は決まり次第
+        %span.event-info__phrase> お知らせします。
+
+%footer.site-footer
+  %p.site-footer__name
+    %span.site-footer__label Presented by
+    = link_to 'Asakusa.rb', 'http://asakusa.rubyist.net/', class: 'site-footer__presenter', target: '_blank', rel: 'noopener'
+  .site-footer__design
+    %p.site-footer__design-item
+      %span.site-footer__design-role Graphic Design by
+      = link_to '@moriko_o', 'https://x.com/moriko_o', class: 'site-footer__design-link', target: '_blank', rel: 'noopener'
+    %p.site-footer__design-item
+      %span.site-footer__design-role Web Design by
+      = link_to '@shokolateday', 'https://x.com/shokolateday', class: 'site-footer__design-link', target: '_blank', rel: 'noopener'

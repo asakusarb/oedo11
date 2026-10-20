@@ -1,0 +1,26 @@
+!!!
+%html{lang: 'ja'}
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{name: 'viewport', content: 'width=device-width, initial-scale=1'}/
+    %meta{name: 'description', content: current_page.data.description}/
+    %meta{name: 'theme-color', content: '#a5eff2'}/
+    %meta{property: 'og:type', content: 'website'}/
+    %meta{property: 'og:site_name', content: '大江戸Ruby会議11'}/
+    %meta{property: 'og:url', content: 'https://regional.rubykaigi.org/oedo11/'}/
+    %meta{property: 'og:title', content: current_page.data.title}/
+    %meta{property: 'og:description', content: current_page.data.description}/
+    %meta{property: 'og:image', content: 'https://regional.rubykaigi.org/oedo11/images/ogp.png'}/
+    %meta{name: 'twitter:card', content: 'summary_large_image'}/
+    %meta{name: 'twitter:site', content: '@OedoRubyKaigi'}/
+    %link{rel: 'icon', href: image_path('favicon.ico'), sizes: 'any'}/
+    %link{rel: 'icon', href: image_path('favicon-32x32.png'), type: 'image/png', sizes: '32x32'}/
+    %link{rel: 'icon', href: image_path('favicon-16x16.png'), type: 'image/png', sizes: '16x16'}/
+    %link{rel: 'apple-touch-icon', href: image_path('apple-touch-icon.png'), sizes: '180x180'}/
+    %title= current_page.data.title
+    :javascript
+      document.documentElement.classList.add('js');
+    = stylesheet_link_tag 'site'
+  %body
+    = yield
+    = javascript_include_tag 'site'
