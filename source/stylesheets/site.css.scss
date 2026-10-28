@@ -8,6 +8,10 @@ $sand-dark: #f6e0c3;
 $coral-hover: #d94f57;
 $coral-border: #d84952;
 $coral-shadow: #bd4048;
+$purple: #9466c0;
+$purple-hover: #855ab3;
+$purple-border: #8457b0;
+$purple-shadow: #6a4590;
 
 $font-sans: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
 $font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
@@ -179,7 +183,9 @@ a:focus-visible {
   position: relative;
   z-index: 6;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   margin-top: -20px;
   padding: 8px 20px 32px;
 }
@@ -207,6 +213,17 @@ a:focus-visible {
   background: $coral-hover;
   box-shadow: 0 1px 0 $coral-shadow;
   transform: translateY(2px);
+}
+
+.hero__ticket-button--party {
+  border-color: $purple-border;
+  background: $purple;
+  box-shadow: 0 3px 0 $purple-shadow;
+}
+
+.hero__ticket-button--party:hover {
+  background: $purple-hover;
+  box-shadow: 0 1px 0 $purple-shadow;
 }
 
 @keyframes cloud-depth {
