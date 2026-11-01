@@ -12,9 +12,16 @@ $purple: #9466c0;
 $purple-hover: #855ab3;
 $purple-border: #8457b0;
 $purple-shadow: #6a4590;
+$pink: #fcbdce;
+$ice: #d2f7f9;
+$tan: #cbb59c;
+$sign-border: #7e453b; // Outline color of timetable-heading.svg
+$burst-yellow: #ffe45c;
+$lemon: #f9ffe2;
 
 $font-sans: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', sans-serif;
 $font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+$font-display: 'Lobster', $font-sans;
 
 * {
   box-sizing: border-box;
@@ -60,6 +67,31 @@ a:focus-visible {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.site-nav {
+  position: fixed;
+  top: 16px;
+  right: 32px;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+
+.site-nav__link {
+  padding: 8px 16px;
+  border: 2px solid $ink;
+  border-radius: 999px;
+  color: $ink;
+  background: rgba($paper, 0.92);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.site-nav__link:hover {
+  background: $sand-dark;
 }
 
 .hero__brand-spacer {
@@ -190,40 +222,43 @@ a:focus-visible {
   padding: 8px 20px 32px;
 }
 
-.hero__ticket-button {
+.button {
   display: inline-flex;
-  min-height: 70px;
   align-items: center;
   justify-content: center;
   max-width: 100%;
-  padding: 0 38px;
   border: 1px solid $coral-border;
   border-radius: 4px;
   color: $paper;
   background: $coral;
   box-shadow: 0 3px 0 $coral-shadow;
-  font-size: 19px;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
   transition: background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-.hero__ticket-button:hover {
+.button:hover {
   background: $coral-hover;
   box-shadow: 0 1px 0 $coral-shadow;
   transform: translateY(2px);
 }
 
-.hero__ticket-button--party {
+.button--party {
   border-color: $purple-border;
   background: $purple;
   box-shadow: 0 3px 0 $purple-shadow;
 }
 
-.hero__ticket-button--party:hover {
+.button--party:hover {
   background: $purple-hover;
   box-shadow: 0 1px 0 $purple-shadow;
+}
+
+.hero__ticket-button {
+  min-height: 70px;
+  padding: 0 38px;
+  font-size: 19px;
 }
 
 @keyframes cloud-depth {
@@ -252,6 +287,12 @@ a:focus-visible {
 @keyframes alpaca-bob {
   0%, 100% { transform: translateY(0) rotate(0); }
   50% { transform: translateY(-5px) rotate(0.8deg); }
+}
+
+// Twinkles for the first 0.7s of every 3s cycle.
+@keyframes sparkle {
+  0%, 23%, 100% { opacity: 0; transform: scale(0.2) rotate(0); }
+  9% { opacity: 1; transform: scale(1) rotate(45deg); }
 }
 
 @keyframes gorilla-breathe {
@@ -328,7 +369,7 @@ a:focus-visible {
 }
 
 // Keeps a phrase on one line so Japanese text wraps between phrases.
-.event-info__phrase {
+.phrase {
   display: inline-block;
 }
 
@@ -341,12 +382,11 @@ a:focus-visible {
   line-height: 1.5;
 }
 
-.event-info__map-link {
+.map-link {
   display: flex;
   width: max-content;
   align-items: center;
   gap: 6px;
-  margin-top: 15px;
   color: $coral;
   font-size: 14px;
   font-weight: 700;
@@ -354,18 +394,340 @@ a:focus-visible {
   text-underline-offset: 3px;
 }
 
-.event-info__map-pin {
+.map-link__pin {
   display: block;
   width: 14px;
   height: 18px;
   flex: 0 0 auto;
 }
 
-.event-info__note {
-  margin: 18px 0 0;
-  color: rgba($ink, 0.76);
+.event-info__map-link {
+  margin-top: 15px;
+}
+
+.timetable {
+  padding: 72px 24px 96px;
+  background: linear-gradient(180deg, $sky 0%, $lemon 100%);
+}
+
+.timetable__inner {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.timetable__heading {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto -64px;
+}
+
+.timetable__heading-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+// Twinkle on the gem once the heading scrolls into view (see site.js), and keep twinkling.
+.timetable__sparkle {
+  position: absolute;
+  top: 12%;
+  left: 52%;
+  width: 22px;
+  height: 22px;
+  background: $paper;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Three pink stripes on each side of the sign, positioned to match the
+// stripes removed from timetable-heading.svg (viewBox 942 314 614 185).
+.timetable__stripes {
+  position: absolute;
+  top: 63.52%;
+  width: 25.24%;
+  height: 15.68%;
+  background: linear-gradient(
+    $pink 0 17.24%,
+    transparent 17.24% 41.38%,
+    $pink 41.38% 58.62%,
+    transparent 58.62% 82.76%,
+    $pink 82.76%
+  );
+  pointer-events: none;
+}
+
+.timetable__stripes--left {
+  left: 3.36%;
+  transform-origin: right center;
+}
+
+.timetable__stripes--right {
+  left: 71.44%;
+  transform-origin: left center;
+}
+
+// Grow from the center outward once the heading scrolls into view.
+@media (prefers-reduced-motion: no-preference) {
+  .js .timetable__stripes {
+    transform: scaleX(0);
+    transition: transform 1200ms ease-out;
+  }
+
+  .js .timetable__heading.is-visible .timetable__stripes {
+    transform: scaleX(1);
+  }
+}
+
+.timetable__heading.is-visible .timetable__sparkle {
+  animation: sparkle 3s ease-out infinite;
+}
+
+// Checkerboard border taken from the timetable material.
+.timetable__frame {
+  padding: 30px;
+  border: 3px solid $sign-border;
+  background-color: $sand;
+  background-image:
+    linear-gradient(45deg, $pink 25%, transparent 25%, transparent 75%, $pink 75%),
+    linear-gradient(45deg, $pink 25%, transparent 25%, transparent 75%, $pink 75%);
+  background-position: 0 0, 15px 15px;
+  background-size: 30px 30px;
+}
+
+// Gorilla sitting on the bottom-right corner of the white panel.
+.timetable__gorilla {
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  bottom: 0;
+  width: 280px;
+  height: auto;
+  // Hide the cloud under the gorilla and sit it on the bottom edge of the panel.
+  clip-path: inset(0 0 36% 0);
+  transform: translateY(36%);
+  pointer-events: none;
+}
+
+// Starburst speech bubble behind the gorilla, like a burst on a diner menu.
+.timetable__gorilla-bubble {
+  position: absolute;
+  z-index: 0;
+  right: 150px;
+  bottom: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  height: 120px;
+  background: $burst-yellow;
+  clip-path: polygon(55.0% 0.2%, 61.5% 15.9%, 76.1% 7.3%, 75.1% 24.2%, 91.2% 23.4%, 83.8% 37.7%, 99.6% 43.8%, 85.8% 53.6%, 96.0% 65.5%, 80.7% 68.8%, 85.8% 84.9%, 69.5% 80.2%, 67.1% 97.0%, 54.5% 85.7%, 45.2% 97.8%, 38.5% 84.1%, 23.9% 92.7%, 24.9% 75.8%, 8.4% 76.8%, 16.2% 62.3%, 0.4% 56.2%, 14.2% 46.4%, 4.0% 34.5%, 19.3% 31.2%, 14.2% 15.1%, 30.5% 19.8%, 33.3% 4.0%, 45.5% 14.3%);
+  color: $coral;
+  font-family: $font-display;
+  font-size: 26px;
+  line-height: 1;
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.timetable__panel {
+  position: relative;
+  padding: 88px 32px 40px;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.timetable__list,
+.timetable__talks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timetable__list {
+  border-top: 3px solid $tan;
+}
+
+.timetable__slot {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 20px 28px;
+  border-bottom: 3px solid $tan;
+}
+
+.timetable__slot--highlight {
+  background: $ice;
+}
+
+.timetable__time {
+  margin: 0;
+  font-family: $font-display;
+  font-size: 17px;
+}
+
+.timetable__title {
+  margin: 0;
+  font-family: $font-display;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.timetable__venue {
+  grid-column: 2;
+}
+
+.timetable__venue-name {
+  margin: 0;
   font-size: 16px;
-  text-align: center;
+  font-weight: 700;
+}
+
+.timetable__venue-note {
+  margin: 4px 0 0;
+  color: rgba($ink, 0.76);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.timetable__venue-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin-top: 8px;
+}
+
+// Smaller version of the purple party button in the hero.
+.timetable__register-button {
+  min-height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+
+// Marks the last slot of the main program.
+.timetable__slot--program-end {
+  border-bottom-width: 4.5px;
+}
+
+// Sets off slots outside the main program, such as the after party,
+// with a dashed line in place of the previous slot's solid one.
+.timetable__slot:has(+ .timetable__slot--separate) {
+  border-bottom: 0;
+}
+
+.timetable__slot--separate {
+  border-top: 3px dashed $tan;
+}
+
+.timetable__label {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: $coral;
+  color: #fff;
+  font-family: $font-sans;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.timetable__talks {
+  display: grid;
+  grid-column: 2;
+  gap: 18px;
+}
+
+.timetable__talk {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.timetable__avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border: 3px solid $pink;
+  border-radius: 8px;
+  background: $sand;
+  object-fit: cover;
+  transition: transform 200ms ease-out;
+}
+
+.timetable__talk:hover .timetable__avatar {
+  transform: scale(1.08);
+}
+
+.timetable__avatar--blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timetable__avatar--blank img {
+  width: 60%;
+  height: auto;
+}
+
+.timetable__talk-time {
+  margin: 0 0 2px;
+  font-family: $font-display;
+  font-size: 15px;
+}
+
+.timetable__talk-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.timetable__speaker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 14px;
+  margin: 4px 0 0;
+  color: $coral;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.timetable__account {
+  text-decoration: none;
+}
+
+a.timetable__account:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+// Arrow-shaped badge, like the sign's arrow.
+.timetable__slide {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 18px 0 12px;
+  color: $paper;
+  background: $coral;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%);
+  font-family: $font-display;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.timetable__slide {
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.timetable__slide:hover {
+  background: $coral-hover;
+  transform: translateX(4px);
 }
 
 .site-footer {
@@ -454,6 +816,17 @@ a:focus-visible {
     width: clamp(68px, 20vw, 84px);
   }
 
+  .site-nav {
+    top: 12px;
+    right: 16px;
+    gap: 6px;
+  }
+
+  .site-nav__link {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
   .hero__brand-spacer {
     height: 40px;
   }
@@ -492,8 +865,66 @@ a:focus-visible {
     font-size: 16px;
   }
 
-  .event-info__note {
+  .timetable {
+    padding: 56px 12px 64px;
+  }
+
+  .timetable__heading {
+    margin-bottom: -40px;
+  }
+
+  .timetable__gorilla {
+    right: 8px;
+    width: 150px;
+  }
+
+  .timetable__gorilla-bubble {
+    right: 82px;
+    bottom: 58px;
+    width: 104px;
+    height: 74px;
+    font-size: 16px;
+  }
+
+  .timetable__frame {
+    padding: 15px;
+    border-width: 2px;
+  }
+
+  .timetable__panel {
+    padding: 60px 12px 24px;
+    border-radius: 10px;
+  }
+
+  .timetable__slot {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 12px;
+  }
+
+  .timetable__venue,
+.timetable__talks {
+    grid-column: 1;
+    margin-top: 8px;
+  }
+
+  .timetable__talk {
+    grid-template-columns: 44px 1fr;
+    gap: 6px 12px;
+  }
+
+  .timetable__avatar {
+    width: 44px;
+    height: 44px;
+  }
+
+  .timetable__talk-title {
     font-size: 15px;
+  }
+
+  .timetable__slide {
+    grid-column: 2;
+    justify-self: start;
   }
 
   .hero__ticket {
@@ -552,7 +983,23 @@ a:focus-visible {
     transition: none;
   }
 
-  .hero__ticket-button {
+  .button {
     transition: none;
+  }
+
+  .timetable__heading.is-visible .timetable__sparkle {
+    animation: none;
+  }
+
+  .timetable__avatar {
+    transition: none;
+  }
+
+  .timetable__slide {
+    transition: none;
+  }
+
+  .timetable__slide:hover {
+    transform: none;
   }
 }

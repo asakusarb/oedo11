@@ -48,6 +48,17 @@ if (!prefersReducedMotion) {
   });
 }
 
+const timetableHeading = document.querySelector('.timetable__heading');
+
+if (timetableHeading && !prefersReducedMotion) {
+  const observer = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    timetableHeading.classList.add('is-visible');
+    observer.disconnect();
+  }, {threshold: 0.6});
+  observer.observe(timetableHeading);
+}
+
 const sign = document.querySelector('.hero__sign');
 
 if (sign && !prefersReducedMotion && window.scrollY < 2 && !window.location.hash) {

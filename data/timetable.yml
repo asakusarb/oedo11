@@ -1,0 +1,61 @@
+# トークの title、登壇者の speaker（名前）、スライドの slide（URL）は決まり次第追加してください。
+- time: 10:00 - 10:25
+  title: 受付
+- time: 10:25 - 10:30
+  title: オープニング
+- time: 10:30 - 12:05
+  title: Ninja Talk 1
+  highlight: true
+  talks:
+    - time: 10:30 - 10:50
+      account: _dak2_
+    - time: 10:55 - 11:15
+      account: EHamachang
+    - time: 11:20 - 11:40
+      account: chiastolite
+    - time: 11:45 - 12:05
+      account: ken_c_lo
+- time: 12:05 - 13:30
+  title: ランチタイム
+- time: 13:30 - 15:05
+  title: Ninja Talk 2
+  highlight: true
+  talks:
+    - time: 13:30 - 13:50
+      account: machida
+    - time: 13:55 - 14:15
+      account: yahonda
+    - time: 14:20 - 14:40
+      account: _ko1
+    - time: 14:45 - 15:05
+      account: ima2zumi
+      # X のアカウントがないので、アイコンはルビーで代用し、@ とリンクは付けない
+      no_x_account: true
+- time: 15:05 - 15:30
+  title: おやつタイム
+- time: 15:30 - 16:00
+  title: 基調講演
+  highlight: true
+  talks:
+    - time: 15:30 - 16:00
+      account: gotoken
+- time: 16:10 - 18:10
+  title: 大江戸フリートークス(仮)
+  highlight: true
+- time: 18:10 - 18:15
+  title: クロージング
+  # 本編の終わりなので、下の線を太くする
+  program_end: true
+- time: 18:15 - 18:35
+  title: 撤収作業
+- time: 19:00 - 21:00
+  title: 懇親会
+  # 本編とは別会場・別申込なので、区切って表示する
+  separate: true
+  label: 別会場・要申込
+  venue:
+    name: アダッキオ
+    address: 東京都足立区千住東1-29-12
+    fee: 参加費 6,800円（当日払い）
+    map_url: https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%80%E3%83%83%E3%82%AD%E3%82%AA%20%E6%9D%B1%E4%BA%AC%E9%83%BD%E8%B6%B3%E7%AB%8B%E5%8C%BA%E5%8D%83%E4%BD%8F%E6%9D%B11-29-12
+    register_url: https://asakusarb.doorkeeper.jp/events/200182
