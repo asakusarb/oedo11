@@ -5,6 +5,9 @@ description: 2026年11月8日開催。大江戸Ruby会議11の公式サイトで
 %main
   = link_to '#top', class: 'site-brand' do
     = image_tag 'event-logo.svg', class: 'site-brand__image', alt: '大江戸Ruby会議11'
+  %nav.site-nav{aria: {label: 'ページ内リンク'}}
+    = link_to '開催情報', '#event-info', class: 'site-nav__link'
+    = link_to 'タイムテーブル', '#timetable', class: 'site-nav__link'
   %section.hero#top{aria: {label: '大江戸Ruby会議11'}}
     .hero__brand-spacer
     .hero__scene
@@ -18,8 +21,8 @@ description: 2026年11月8日開催。大江戸Ruby会議11の公式サイトで
       = image_tag 'gorilla.svg', class: 'hero__object hero__animal hero__animal--gorilla hero__reveal', alt: 'ゴリラのイラスト'
       = image_tag 'sign.svg', class: 'hero__object hero__sign', alt: '大江戸Ruby会議11の案内看板'
     .hero__ticket
-      = link_to '参加チケットを購入する', 'https://asakusarb.doorkeeper.jp/events/199923', class: 'hero__ticket-button', target: '_blank', rel: 'noopener'
-      = link_to '懇親会に参加登録する', 'https://asakusarb.doorkeeper.jp/events/200182', class: 'hero__ticket-button hero__ticket-button--party', target: '_blank', rel: 'noopener'
+      = link_to '参加チケットを購入する', 'https://asakusarb.doorkeeper.jp/events/199923', class: 'button hero__ticket-button', target: '_blank', rel: 'noopener'
+      = link_to '懇親会に参加登録する', 'https://asakusarb.doorkeeper.jp/events/200182', class: 'button button--party hero__ticket-button', target: '_blank', rel: 'noopener'
 
   %section.event-info#event-info
     .event-info__inner
@@ -35,16 +38,67 @@ description: 2026年11月8日開催。大江戸Ruby会議11の公式サイトで
           .event-info__item
             %dt 会場
             %dd
-              %span.event-info__phrase 東京芸術センター
-              %span.event-info__phrase 天空劇場
+              %span.phrase 東京芸術センター
+              %span.phrase 天空劇場
               %span.event-info__address
-                %span.event-info__phrase 東京都足立区千住1-4-1
-              = link_to 'https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E8%8A%B8%E8%A1%93%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%20%E5%A4%A9%E7%A9%BA%E5%8A%87%E5%A0%B4', class: 'event-info__map-link', target: '_blank', rel: 'noopener' do
-                = image_tag 'map-pin.svg', class: 'event-info__map-pin', alt: ''
+                %span.phrase 東京都足立区千住1-4-1
+              = link_to 'https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E8%8A%B8%E8%A1%93%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%20%E5%A4%A9%E7%A9%BA%E5%8A%87%E5%A0%B4', class: 'map-link event-info__map-link', target: '_blank', rel: 'noopener' do
+                = image_tag 'map-pin.svg', class: 'map-link__pin', alt: ''
                 %span Google Maps
-      %p.event-info__note
-        %span.event-info__phrase> 詳細は決まり次第
-        %span.event-info__phrase> お知らせします。
+
+  %section.timetable#timetable
+    .timetable__inner
+      %h2.timetable__heading
+        = image_tag 'timetable-heading.svg', class: 'timetable__heading-image', alt: 'Time Table タイムテーブル'
+        %span.timetable__stripes.timetable__stripes--left{aria: {hidden: 'true'}}
+        %span.timetable__stripes.timetable__stripes--right{aria: {hidden: 'true'}}
+        %span.timetable__sparkle{aria: {hidden: 'true'}}
+      .timetable__frame
+        .timetable__panel
+          %span.timetable__gorilla-bubble{aria: {hidden: 'true'}} Hoo hoo!!!!
+          = image_tag 'gorilla.svg', class: 'timetable__gorilla', alt: '', loading: 'lazy'
+          %ol.timetable__list
+            - data.timetable.each do |slot|
+              %li{class: ['timetable__slot', ('timetable__slot--highlight' if slot.highlight), ('timetable__slot--separate' if slot.separate), ('timetable__slot--program-end' if slot.program_end)]}
+                %p.timetable__time= slot.time
+                %p.timetable__title
+                  = slot.title
+                  - if slot.label
+                    %span.timetable__label= slot.label
+                - if slot.venue
+                  .timetable__venue
+                    %p.timetable__venue-name= slot.venue.name
+                    %p.timetable__venue-note
+                      %span.phrase= slot.venue.address
+                      %span.phrase= slot.venue.fee
+                    .timetable__venue-links
+                      = link_to slot.venue.map_url, class: 'map-link', target: '_blank', rel: 'noopener' do
+                        = image_tag 'map-pin.svg', class: 'map-link__pin', alt: ''
+                        %span Google Maps
+                      - if slot.venue.register_url
+                        = link_to '参加登録はこちら', slot.venue.register_url, class: 'button button--party timetable__register-button', target: '_blank', rel: 'noopener'
+                - if slot.talks
+                  %ul.timetable__talks
+                    - slot.talks.each do |talk|
+                      %li.timetable__talk
+                        - if (icon = speaker_icon_path(talk.account))
+                          = image_tag icon, class: 'timetable__avatar', alt: '', loading: 'lazy'
+                        - else
+                          .timetable__avatar.timetable__avatar--blank
+                            = image_tag 'gem.svg', alt: ''
+                        .timetable__talk-body
+                          %p.timetable__talk-time= talk.time
+                          - if talk.title
+                            %p.timetable__talk-title= talk.title
+                          %p.timetable__speaker
+                            - if talk.speaker
+                              %span= talk.speaker
+                            - if talk.no_x_account
+                              %span.timetable__account= talk.account
+                            - else
+                              = link_to "@#{talk.account}", "https://x.com/#{talk.account}", class: 'timetable__account', target: '_blank', rel: 'noopener'
+                        - if talk.slide
+                          = link_to 'Slide', talk.slide, class: 'timetable__slide', target: '_blank', rel: 'noopener'
 
 %footer.site-footer
   %p.site-footer__name
