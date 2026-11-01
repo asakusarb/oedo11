@@ -603,7 +603,10 @@ a:focus-visible {
 }
 
 // Smaller version of the purple party button in the hero.
+// Stays above the gorilla, which overlaps it on narrow screens.
 .timetable__register-button {
+  position: relative;
+  z-index: 2;
   min-height: 40px;
   padding: 0 20px;
   font-size: 14px;
@@ -870,16 +873,17 @@ a.timetable__account:hover {
   }
 
   .timetable__heading {
-    margin-bottom: -40px;
+    width: 80%;
+    margin-bottom: -32px;
   }
 
   .timetable__gorilla {
-    right: 8px;
+    right: -8px;
     width: 150px;
   }
 
   .timetable__gorilla-bubble {
-    right: 82px;
+    right: 66px;
     bottom: 58px;
     width: 104px;
     height: 74px;
@@ -916,6 +920,18 @@ a.timetable__account:hover {
   .timetable__avatar {
     width: 44px;
     height: 44px;
+  }
+
+  .timetable__time {
+    font-size: 14px;
+  }
+
+  .timetable__title {
+    font-size: 16px;
+  }
+
+  .timetable__talk-time {
+    font-size: 13px;
   }
 
   .timetable__talk-title {
