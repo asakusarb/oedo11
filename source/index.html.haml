@@ -65,6 +65,17 @@ description: 2026年11月8日開催。大江戸Ruby会議11の公式サイトで
                   = slot.title
                   - if slot.label
                     %span.timetable__label= slot.label
+                - if slot.theme || slot.description
+                  .timetable__about
+                    - if slot.theme
+                      %p.timetable__theme= slot.theme
+                    - if slot.description
+                      %p.timetable__description= slot.description
+                    - if slot.illustrations
+                      .timetable__crowd
+                        - slot.illustrations.each do |illustration|
+                          .timetable__avatar.timetable__crowd-icon{class: "timetable__crowd-icon--#{File.basename(illustration, '.svg')}"}
+                            = image_tag illustration, alt: '', loading: 'lazy'
                 - if slot.venue
                   .timetable__venue
                     %p.timetable__venue-name= slot.venue.name
