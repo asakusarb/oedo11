@@ -533,6 +533,14 @@ a:focus-visible {
   pointer-events: none;
 }
 
+// On narrower screens the gorilla and its bubble would sit on top of the timetable text.
+@media (max-width: 959px) {
+  .timetable__gorilla,
+  .timetable__gorilla-bubble {
+    display: none;
+  }
+}
+
 .timetable__panel {
   position: relative;
   padding: 88px 32px 40px;
@@ -549,6 +557,12 @@ a:focus-visible {
 
 .timetable__list {
   border-top: 3px solid $tan;
+}
+
+// Text and buttons sit above the gorilla and its bubble, while the slot lines stay below them.
+.timetable__slot > * {
+  position: relative;
+  z-index: 2;
 }
 
 .timetable__slot {
@@ -577,6 +591,92 @@ a:focus-visible {
   font-weight: 700;
 }
 
+.timetable__about {
+  display: grid;
+  grid-column: 2;
+  grid-template-columns: 108px 1fr;
+  align-items: start;
+  column-gap: 18px;
+}
+
+// Speaker-sized icons overlapping side by side, back to front, for slots with several speakers.
+.timetable__crowd {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 108px;
+  height: 64px;
+}
+
+.timetable__crowd-icon {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+}
+
+.timetable__crowd-icon:nth-child(1) {
+  top: 8px;
+  left: 52px;
+}
+
+.timetable__crowd-icon:nth-child(2) {
+  top: 4px;
+  left: 26px;
+}
+
+.timetable__crowd-icon:nth-child(3) {
+  left: 0;
+}
+
+.timetable__crowd-icon img {
+  display: block;
+  width: 100%;
+  max-width: none;
+}
+
+// Zoom each illustration in on its upper body.
+.timetable__crowd-icon--person img {
+  width: 150%;
+  margin: -4% 0 0 -25%;
+}
+
+// The back icons only show their right side, so their heads go right of center.
+.timetable__crowd-icon--gorilla img {
+  width: 180%;
+  margin: 7% 0 0 -20%;
+}
+
+.timetable__crowd-icon--pigeon img {
+  width: 150%;
+  margin: -12% 0 0 -4%;
+}
+
+.timetable__theme {
+  grid-column: 2;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.timetable__description {
+  grid-column: 2;
+  margin: 4px 0 0;
+  color: rgba($ink, 0.76);
+  font-size: 14px;
+  line-height: 1.7;
+  // Keeps the line breaks written in data/timetable.yml.
+  white-space: pre-line;
+}
+
+// Wraps Japanese only after punctuation such as 、 and 。, or before 「,
+// so a line never breaks in the middle of a phrase. Overlong runs still wrap anywhere.
+.timetable__theme,
+.timetable__description {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 .timetable__venue {
   grid-column: 2;
 }
@@ -603,10 +703,7 @@ a:focus-visible {
 }
 
 // Smaller version of the purple party button in the hero.
-// Stays above the gorilla, which overlaps it on narrow screens.
 .timetable__register-button {
-  position: relative;
-  z-index: 2;
   min-height: 40px;
   padding: 0 20px;
   font-size: 14px;
@@ -877,19 +974,6 @@ a.timetable__account:hover {
     margin-bottom: -32px;
   }
 
-  .timetable__gorilla {
-    right: -8px;
-    width: 150px;
-  }
-
-  .timetable__gorilla-bubble {
-    right: 66px;
-    bottom: 58px;
-    width: 104px;
-    height: 74px;
-    font-size: 16px;
-  }
-
   .timetable__frame {
     padding: 15px;
     border-width: 2px;
@@ -906,10 +990,39 @@ a.timetable__account:hover {
     padding: 16px 12px;
   }
 
+  .timetable__about,
   .timetable__venue,
-.timetable__talks {
+  .timetable__talks {
     grid-column: 1;
     margin-top: 8px;
+  }
+
+  .timetable__about {
+    grid-template-columns: 1fr;
+  }
+
+  // Above the theme on narrow screens, so the text keeps its full width.
+  .timetable__crowd {
+    grid-row: auto;
+    order: -1;
+    width: 80px;
+    height: 50px;
+    margin-bottom: 8px;
+  }
+
+  .timetable__theme,
+  .timetable__description {
+    grid-column: 1;
+  }
+
+  .timetable__crowd-icon:nth-child(1) {
+    top: 6px;
+    left: 36px;
+  }
+
+  .timetable__crowd-icon:nth-child(2) {
+    top: 3px;
+    left: 18px;
   }
 
   .timetable__talk {
